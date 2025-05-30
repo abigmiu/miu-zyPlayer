@@ -2,7 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import fixPath from 'fix-path';
+// import * as fixPath from 'fix-path';
 
 /** 浏览器默认设置 */
 function setBrowserDefaultConfig() {
@@ -57,7 +57,7 @@ function createWindow(): void {
 }
 
 function bootstrap() {
-    fixPath();
+    // fixPath();
     setBrowserDefaultConfig();
 }
 
