@@ -1,7 +1,8 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, screen } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { createWindowMenu } from './core/menu';
 // import * as fixPath from 'fix-path';
 
 /** 浏览器默认设置 */
@@ -9,8 +10,8 @@ function setBrowserDefaultConfig() {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // 忽略 TLS 证书错误
     process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'; // 关闭安全警告
     app.commandLine.appendSwitch(
-      'disable-features',
-      'OutOfBlinkCors, SameSiteByDefaultCookies, CookiesWithoutSameSiteMustBeSecure, BlockInsecurePrivateNetworkRequests, OutOfProcessPdf, IsolateOrigins, site-per-process, StandardCompliantNonSpecialSchemeURLParsing',
+        'disable-features',
+        'OutOfBlinkCors, SameSiteByDefaultCookies, CookiesWithoutSameSiteMustBeSecure, BlockInsecurePrivateNetworkRequests, OutOfProcessPdf, IsolateOrigins, site-per-process, StandardCompliantNonSpecialSchemeURLParsing',
     ); // 禁用
     app.commandLine.appendSwitch('enable-features', 'PlatformHEVCDecoderSupport, HardwareAccelerationModeDefault'); // 启用
     app.commandLine.appendSwitch('ignore-certificate-errors'); // 忽略证书错误
@@ -26,17 +27,27 @@ function setBrowserDefaultConfig() {
 
 function createWindow(): void {
     // Create the browser window.
+
+    const primaryDisplay = screen.getPrimaryDisplay();
+    const { x, y, width, height } = primaryDisplay.workArea;
+    console.log('app.name', app.name)
     const mainWindow = new BrowserWindow({
-        width: 900,
-        height: 670,
+        x,
+        y,
+        width,
+        height,
+        frame: false,
+        titleBarStyle: 'hidden',
         show: false,
         autoHideMenuBar: true,
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
             preload: join(__dirname, '../preload/index.js'),
             sandbox: false
-        }
+        },
+        title: app.name,
     })
+    mainWindow.webContents.openDevTools();
 
     mainWindow.on('ready-to-show', () => {
         mainWindow.show()
@@ -58,6 +69,7 @@ function createWindow(): void {
 
 function bootstrap() {
     // fixPath();
+    app.setName('视界');
     setBrowserDefaultConfig();
 }
 
@@ -76,8 +88,9 @@ app.whenReady().then(() => {
     app.on('browser-window-created', (_, window) => {
         optimizer.watchWindowShortcuts(window)
     })
+    createWindow();
 
-    createWindow()
+    createWindowMenu();
 
     app.on('activate', function () {
         // On macOS it's common to re-create a window in the app when the
