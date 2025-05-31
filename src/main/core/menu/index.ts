@@ -1,29 +1,25 @@
-import { platform } from '@electron-toolkit/utils';
-import { app,  Menu, MenuItem, MenuItemConstructorOptions } from 'electron';
+import { platform } from '@electron-toolkit/utils'
+import { app, Menu, MenuItem, MenuItemConstructorOptions } from 'electron'
 
 export function createWindowMenu() {
     if (!platform.isMacOS) {
-        Menu.setApplicationMenu(null);
-        return;
+        Menu.setApplicationMenu(null)
+        return
     }
-    console.log('app.name', app.name);
+    console.log('app.name', app.name)
     const appMenuOptions: MenuItemConstructorOptions = {
         label: app.getName(),
-        submenu: [
-            { label: '关于', role: 'about' }
-        ]
+        submenu: [{ label: '关于', role: 'about' }]
     }
     const displayMenuOptions: MenuItemConstructorOptions = {
         label: '显示',
-        submenu: [
-            { label: '切换开发者工具', role: 'toggleDevTools' }
-        ]
+        submenu: [{ label: '切换开发者工具', role: 'toggleDevTools' }]
     }
 
     const menuBar: Array<MenuItemConstructorOptions | MenuItem> = [
         appMenuOptions,
-        displayMenuOptions,
+        displayMenuOptions
     ]
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menuBar));
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuBar))
 }

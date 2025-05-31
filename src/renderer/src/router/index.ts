@@ -1,13 +1,11 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { baseRoutes } from "./modules/base";
+import { createRouter, createWebHistory } from 'vue-router'
+import { baseRoutes } from './modules/base'
 
-const routes = [
-    ...baseRoutes,
-]
+const routes = [...baseRoutes]
 
 const router = createRouter({
     history: createWebHistory(),
-    routes,
+    routes
 })
 
 export default router

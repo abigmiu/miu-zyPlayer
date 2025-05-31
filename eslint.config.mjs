@@ -35,14 +35,14 @@ export default tseslint.config(
             ]
         }
     },
-    eslintConfigPrettier,
-    {
-        'prettier/prettier': [
-            'error',
-            {
-                singleQuote: true,
-                tabWidth: 4
-            }
-        ]
-    }
+    eslintConfigPrettier
+    // {
+    //     'prettier/prettier': [
+    //         'error',
+    //         {
+    //             singleQuote: true,
+    //             tabWidth: 4
+    //         }
+    //     ]
+    // }
 )

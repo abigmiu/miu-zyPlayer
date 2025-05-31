@@ -1,5 +1,5 @@
-import BaseLayout from "@renderer/layout/BaseLayout.vue";
-import { RouteRecordRaw } from "vue-router";
+import BaseLayout from '@renderer/layout/BaseLayout.vue'
+import { RouteRecordRaw } from 'vue-router'
 
 export const baseRoutes: RouteRecordRaw[] = [
     {

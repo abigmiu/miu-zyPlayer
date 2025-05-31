@@ -1,3 +1,1 @@
-<template>
-    indexpage
-</template>
+<template>indexpage</template>
