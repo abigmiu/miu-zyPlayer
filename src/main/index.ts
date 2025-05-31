@@ -45,6 +45,10 @@ function createWindow(): void {
             preload: join(__dirname, '../preload/index.js'),
             sandbox: false
         },
+        trafficLightPosition: {
+            x: 12,
+            y: 12
+        },
         title: app.name,
     })
     mainWindow.webContents.openDevTools();

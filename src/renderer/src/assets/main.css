@@ -1,0 +1,9 @@
+html,body, #app,.n-config-provider {
+    height: 100%;
+}
+
+:root {
+    --header-height: 60px;
+    --traffic-light-width: 78px;
+    --traffic-light-height: 40px;
+}
