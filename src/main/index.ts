@@ -6,7 +6,7 @@ import { createWindowMenu } from './core/menu'
 // import * as fixPath from 'fix-path';
 
 /** 浏览器默认设置 */
-function setBrowserDefaultConfig() {
+function setBrowserDefaultConfig(): void {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0' // 忽略 TLS 证书错误
     process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true' // 关闭安全警告
     app.commandLine.appendSwitch(
@@ -49,10 +49,6 @@ function createWindow(): void {
             preload: join(__dirname, '../preload/index.js'),
             sandbox: false
         },
-        trafficLightPosition: {
-            x: 12,
-            y: 12
-        },
         title: app.name
     })
     mainWindow.webContents.openDevTools()
@@ -75,7 +71,7 @@ function createWindow(): void {
     }
 }
 
-function bootstrap() {
+function bootstrap(): void {
     // fixPath();
     app.setName('视界')
     setBrowserDefaultConfig()

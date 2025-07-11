@@ -24,11 +24,15 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^4.0.0",
+    "@types/uuid": "^10.0.0",
+    "crypto-js": "^4.2.0",
     "electron-updater": "^6.3.9",
     "fix-path": "^4.0.0",
     "modern-normalize": "^3.0.1",
+    "nanoid": "^5.1.5",
     "pinia": "^3.0.2",
     "sass-embedded": "^1.89.1",
+    "uuid": "^11.1.0",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
