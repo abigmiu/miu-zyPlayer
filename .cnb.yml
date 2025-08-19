@@ -1,0 +1,22 @@
+$:
+  vscode:
+    - docker:
+        image: docker.cnb.cool/abigmiu/baseenv
+      services:
+        - vscode
+        - docker
+
+# 推送到github
+.sync_to_github: &sync_to_github
+  docker:
+    image: alpine/git:latest
+  imports:
+    - https://cnb.cool/abigmiu/keys/-/blob/main/keys.yml
+  stages:
+    - name: sync-to-github
+      script: sh .build/sync-to-github.sh
+
+# 匹配所有分支
+"**":
+  push:
+    - *sync_to_github
