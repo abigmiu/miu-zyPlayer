@@ -6,8 +6,8 @@ $:
         - vscode
         - docker
       stages:
-        name: 安装依赖
-        script: pnpm install --frozen-lockfile
+        - name: 安装依赖
+          script: pnpm install --frozen-lockfile
 
 # 推送到github
 .sync_to_github: &sync_to_github
