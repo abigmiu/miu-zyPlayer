@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import UnoCSS from 'unocss/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import path from 'path'
@@ -20,6 +21,7 @@ export default defineConfig({
         },
         plugins: [
             vue(),
+            vueJsx(),
             UnoCSS(),
             createSvgIconsPlugin({
                 iconDirs: [path.resolve(__dirname, 'src/renderer/src/assets/svgs')],
