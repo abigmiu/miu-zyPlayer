@@ -10,6 +10,7 @@ export const baseRoutes: RouteRecordRaw[] = [
             {
                 path: 'index',
                 name: 'index',
+                props: true,
                 component: () => import('@renderer/pages/index/IndexPage.vue')
             }
         ]
