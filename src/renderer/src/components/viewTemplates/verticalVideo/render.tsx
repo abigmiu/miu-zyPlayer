@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import { Mousewheel, Virtual } from 'swiper/modules';
 import './style.scss';
+import TemplateVerticalVideo from './template';
 
 
 interface IVerticalVideoItem {
@@ -29,10 +30,17 @@ export default defineComponent({
         SwiperSlide,
     },
     setup() {
+        const props = defineProps<{
+            id: string;
+        }>();
+
+
+        const templateIns: TemplateVerticalVideo = new ;
+
+
         const dataList = ref<IDataItem[]>([]);
         const currentIndex = ref<number>(); // 当前播放视频的index
         const preIndex = ref<number>(); // 上一个播放视频的index
-
 
         let videoRefs: Record<string, HTMLVideoElement> = {};
         const setVideoRef = (el, rid: string) => {

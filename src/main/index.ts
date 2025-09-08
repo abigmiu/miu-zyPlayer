@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, screen } from 'electron'
+import { app, shell, BrowserWindow, screen, session } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -19,7 +19,6 @@ function setBrowserDefaultConfig(): void {
         'PlatformHEVCDecoderSupport, HardwareAccelerationModeDefault'
     ) // 启用
     app.commandLine.appendSwitch('ignore-certificate-errors') // 忽略证书错误
-    app.commandLine.appendSwitch('disable-web-security') // 禁用安全
     app.commandLine.appendSwitch('disable-renderer-backgrounding') // 禁用渲染器后台化
     app.commandLine.appendSwitch('disable-site-isolation-trials') // 禁用站点隔离试验
     app.commandLine.appendSwitch('gpu-memory-buffer-compositor-resources') // GPU内存缓冲
@@ -27,6 +26,12 @@ function setBrowserDefaultConfig(): void {
     app.commandLine.appendSwitch('no-sandbox') // 禁用沙盒
     app.commandLine.appendSwitch('proxy-bypass-list', '<local>') // 代理白名单
     app.commandLine.appendSwitch('wm-window-animations-disabled') // 禁用窗口动画
+
+    session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
+        if (details.referrer != null) {
+            // TODO: 去掉referer；
+        }
+    })
 }
 
 function createWindow(): void {
