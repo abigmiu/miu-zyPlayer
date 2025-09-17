@@ -6,5 +6,5 @@
     </div>
 </template>
 <script setup lang="ts">
-import VerticalVideoTemplate from '@renderer/components/viewTemplates/verticalVideo/render';
+import VerticalVideoTemplate from '@renderer/components/viewTemplates/pageVideo/render';
 </script>

@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
 
-export interface IVerticalVideoItem {
+export interface IPageVideoItem {
     /** 标题 */
     title?: string
     /** 封面图 */
@@ -22,27 +22,41 @@ export interface ICategoryItem extends IKeyValue {
     children: IKeyValue[]
 }
 
-interface IVideoItem extends IVerticalVideoItem {
+export interface IRenderPageVideoItem extends IPageVideoItem {
     _id: string
 }
 
-/** 竖屏视频 */
-abstract class TemplateVerticalVideo {
+
+export abstract class PageVideoTemplate {
+    page!: number
+    searchKey?: string;
+    categories!: ICategoryItem[];
+
+    /** 加载下一页数据 */
+    abstract fetchPageData(page: number): Promise<IPageVideoItem[]>
+}
+
+/** 分页视频模板 */
+export class PageVideoRuntime extends PageVideoTemplate {
     /** 输入框 */
     searchKey: string
     /** 数据列表 */
-    dataList: IVideoItem[]
+    dataList: IRenderPageVideoItem[]
     /** 分类选择项 */
     categories: ICategoryItem[]
 
+    page = 0;
+
     constructor() {
+        super();
         this.dataList = []
         this.searchKey = ''
         this.categories = []
     }
 
-    protected async loadNextPage(): Promise<IVideoItem[]> {
-        const res = await this.fetchPageData()
+    protected async loadNextPage(): Promise<IRenderPageVideoItem[]> {
+        const res = await this.fetchPageData(this.page + 1);
+        this.page += 1;
         res.forEach((item) => {
             this.dataList.push({
                 ...item,
@@ -53,7 +67,7 @@ abstract class TemplateVerticalVideo {
     }
 
     /** 加载下一页数据 */
-    protected abstract fetchPageData(): Promise<IVerticalVideoItem[]>
+    async fetchPageData(page: number): Promise<IPageVideoItem[]> {
+        return [];
+    }
 }
-
-export default TemplateVerticalVideo
