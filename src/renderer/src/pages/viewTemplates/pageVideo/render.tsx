@@ -8,7 +8,7 @@ import { usePageVideoRuntime } from './hooks';
 
 
 export default defineComponent({
-    name: 'VerticalVideoTemplate',
+    name: 'pageVideoTemplate',
     components: {
         Swiper,
         SwiperSlide,
