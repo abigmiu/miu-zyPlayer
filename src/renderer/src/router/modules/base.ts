@@ -19,6 +19,12 @@ export const baseRoutes: RouteRecordRaw[] = [
                 name: 'pageVideoTemplate',
                 props: (route) => route.query,
                 component: () => import('@renderer/pages/viewTemplates/pageVideo/render')
+            },
+            {
+                path: 'playground',
+                name: 'playground',
+                props: (route) => route.query,
+                component: () => import('@renderer/pages/playground/playgroundPage.vue')
             }
         ]
     }
