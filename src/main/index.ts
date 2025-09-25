@@ -4,6 +4,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { createWindowMenu } from './core/menu'
 import nestBootstrap from './server/index';
+import { initLog, initUserData } from './core/init'
 // import * as fixPath from 'fix-path';
 
 /** 浏览器默认设置 */
@@ -86,6 +87,9 @@ function bootstrap(): void {
 bootstrap()
 
 app.whenReady().then(() => {
+    initUserData();
+    initLog();
+
     nestBootstrap(3000)
     bootstrap();
     electronApp.setAppUserModelId('abigmiu.zyplayer')
@@ -95,7 +99,6 @@ app.whenReady().then(() => {
         optimizer.watchWindowShortcuts(window)
     })
     createWindow()
-
     createWindowMenu()
 
     app.on('activate', function () {

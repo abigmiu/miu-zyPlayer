@@ -1,5 +1,6 @@
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
+import * as cheerio from 'cheerio';
 
 
 function createImmutableProxy(target) {
@@ -51,3 +52,8 @@ export const httpFetch = axiosProxy.request;
 
 // 加密
 export const crypt = createImmutableProxy(CryptoJS);
+
+
+// html 解析
+export const cheerioProxy = createImmutableProxy(cheerio);
+
