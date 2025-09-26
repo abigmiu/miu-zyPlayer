@@ -11,10 +11,9 @@
 </template>
 <script lang="ts" setup>
 import { NLayout, NLayoutContent } from 'naive-ui'
-import BaseLayoutSider from './components/base/BaseLayoutSider.vue';
-import BaseLayoutHeader from './components/base/BaseLayoutHeader.vue';
-import { RouterView } from 'vue-router';
-
+import BaseLayoutSider from './components/base/BaseLayoutSider.vue'
+import BaseLayoutHeader from './components/base/BaseLayoutHeader.vue'
+import { RouterView } from 'vue-router'
 </script>
 
 <style lang="scss" scoped>

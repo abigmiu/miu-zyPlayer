@@ -1,7 +1,7 @@
 import { platform } from '@electron-toolkit/utils'
 import { app, Menu, MenuItem, MenuItemConstructorOptions } from 'electron'
 
-export function createWindowMenu() {
+export function createWindowMenu(): void {
     if (!platform.isMacOS) {
         Menu.setApplicationMenu(null)
         return

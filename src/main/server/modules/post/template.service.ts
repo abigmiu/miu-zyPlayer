@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class TemplateService {
-    async loadPage(page: number) {
-
+    async loadPage(): Promise<void> {
+        console.log('loadPage')
     }
 }

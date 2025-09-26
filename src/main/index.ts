@@ -3,7 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { createWindowMenu } from './core/menu'
-import nestBootstrap from './server/index';
+import nestBootstrap from './server/index'
 import { initLog, initUserData } from './core/init'
 // import * as fixPath from 'fix-path';
 
@@ -28,7 +28,7 @@ function setBrowserDefaultConfig(): void {
     app.commandLine.appendSwitch('proxy-bypass-list', '<local>') // 代理白名单
     app.commandLine.appendSwitch('wm-window-animations-disabled') // 禁用窗口动画
 
-    session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
+    session.defaultSession.webRequest.onBeforeRequest((details) => {
         if (details.referrer != null) {
             // TODO: 去掉referer；
         }
@@ -87,13 +87,12 @@ function bootstrap(): void {
 bootstrap()
 
 app.whenReady().then(() => {
-    initUserData();
-    initLog();
+    initUserData()
+    initLog()
 
     nestBootstrap(3000)
-    bootstrap();
+    bootstrap()
     electronApp.setAppUserModelId('abigmiu.zyplayer')
-
 
     app.on('browser-window-created', (_, window) => {
         optimizer.watchWindowShortcuts(window)
@@ -106,10 +105,8 @@ app.whenReady().then(() => {
     })
 })
 
-
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
     }
 })
-

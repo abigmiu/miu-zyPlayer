@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import UnoCSS from 'unocss/vite'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import path, { resolve } from 'path'
+import { resolve } from 'path'
 
 export default defineConfig({
     root: './src/renderer',
@@ -30,6 +30,6 @@ export default defineConfig({
     server: {
         port: 3000,
         open: true,
-        allowedHosts: ['2eve2r1e3j-3000.cnb.run']
+        allowedHosts: ['8y8msbb4cd-3000.cnb.run']
     }
 })

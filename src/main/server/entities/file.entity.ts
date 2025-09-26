@@ -1,18 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity('file')
 export class FileEntity {
     @PrimaryGeneratedColumn({ name: 'id' })
-    id: number;
+    id: number
 
     @Column({ type: 'varchar', length: 50, name: 'template_id', comment: '模板ID' })
-    templateId: string;
-
+    templateId: string
 
     @Column({ type: 'varchar', length: 1000, name: 'url_path', comment: '文件网络url' })
-    urlPath: string;
+    urlPath: string
 
     @Column({ type: 'varchar', length: 50, name: 'file_path', comment: '文件路径' })
-    filePath: string;
-
+    filePath: string
 }

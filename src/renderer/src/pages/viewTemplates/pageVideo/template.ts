@@ -26,11 +26,10 @@ export interface IRenderPageVideoItem extends IPageVideoItem {
     _id: string
 }
 
-
 export abstract class PageVideoTemplate {
     page!: number
-    searchKey?: string;
-    categories!: ICategoryItem[];
+    searchKey?: string
+    categories!: ICategoryItem[]
 
     /** 加载下一页数据 */
     abstract fetchPageData(page: number): Promise<IPageVideoItem[]>
@@ -45,18 +44,18 @@ export class PageVideoRuntime extends PageVideoTemplate {
     /** 分类选择项 */
     categories: ICategoryItem[]
 
-    page = 0;
+    page = 0
 
     constructor() {
-        super();
+        super()
         this.dataList = []
         this.searchKey = ''
         this.categories = []
     }
 
     protected async loadNextPage(): Promise<IRenderPageVideoItem[]> {
-        const res = await this.fetchPageData(this.page + 1);
-        this.page += 1;
+        const res = await this.fetchPageData(this.page + 1)
+        this.page += 1
         res.forEach((item) => {
             this.dataList.push({
                 ...item,
@@ -68,6 +67,6 @@ export class PageVideoRuntime extends PageVideoTemplate {
 
     /** 加载下一页数据 */
     async fetchPageData(page: number): Promise<IPageVideoItem[]> {
-        return [];
+        return []
     }
 }

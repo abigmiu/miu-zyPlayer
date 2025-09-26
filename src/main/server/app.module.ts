@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
-import { TemplateModule } from './modules/post/template.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import path from 'path';
-import { app } from 'electron';
+import { TemplateModule } from './modules/post/template.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import path from 'path'
+import { app } from 'electron'
 
 @Module({
     imports: [
@@ -13,6 +13,4 @@ import { app } from 'electron';
         TemplateModule
     ]
 })
-export class AppModule {
-
-}
+export class AppModule {}

@@ -1,4 +1,3 @@
-
 <template>
     <NLayoutSider
         collapse-mode="width"
