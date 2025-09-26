@@ -3,48 +3,51 @@ import * as monaco from "monaco-editor";
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 
+import * as cheerio from 'cheerio';
+cheerio.load
 // 额外的ts 类型
 import testDts from '@renderer/types/template/test.d.ts?raw'
+import injectUtilDts from '@renderer/types/template/util.d.ts?raw';
 
-function injectDts(): void {
-    const loadFiles = [
-        { name: 'axios', path: '../../../../../node_modules/axios/index.d.ts' },
-        { name: 'cheerio', path: '../../../../../node_modules/cheerio/dist/esm/cheerio.d.ts' },
-        { name: 'crypto-js', path: '../../../../../node_modules/@types/crypto-js/index.d.ts' }
-    ]
 
-    const axiosImportMeta = import.meta.glob('../../../../../node_modules/axios/index.d.ts', {  query: '?raw'})
-    axiosImportMeta['../../../../../node_modules/axios/index.d.ts']()
-        .then((content: { default: string }) => {
-            console.log('axiosImportMeta content', content);
-            if (content.default) {
-                monaco.languages.typescript.typescriptDefaults.addExtraLib(content.default, 'axios')
-            }
+function injectAxiosDts() {
+    const importMeta: Record<string, () => string> = import.meta.glob('../../../../../node_modules/axios/index.d.ts', { query: '?raw', import: 'default', eager: true });
+    const dts = importMeta['../../../../../node_modules/axios/index.d.ts']
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(dts, 'file:///node_modules/axios/index.d.ts')
+
+}
+
+function injectCryptoDts() {
+    const importMeta: Record<string, () => string> = import.meta.glob('../../../../../node_modules/@types/crypto-js/index.d.ts', { query: '?raw', import: 'default', eager: true });
+    const dts = importMeta['../../../../../node_modules/@types/crypto-js/index.d.ts']
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(dts, 'file:///node_modules/crypto-js/index.d.ts')
+}
+
+function injectCheerioDts() {
+    const importMeta: Record<string, () => string> = import.meta.glob('../../../../../node_modules/cheerio/dist/esm/**/*.d.ts', { query: '?raw', import: 'default', eager: true });
+    Object.keys(importMeta)
+        .forEach((path) => {
+            const dts = importMeta[path]
+            const virtualPath = path.slice(14).replace('/dist/esm/', '/')
+            monaco.languages.typescript.typescriptDefaults.addExtraLib(dts, `file://${virtualPath}`);
         })
-    const cheerioImportMeta = import.meta.glob('../../../../../node_modules/cheerio/dist/esm/cheerio.d.ts', {  query: '?raw'})
-    cheerioImportMeta['../../../../../node_modules/cheerio/dist/esm/cheerio.d.ts']()
-        .then((content: { default: string }) => {
-            console.log('cheerioImportMeta content', content);
-            if (content.default) {
-                monaco.languages.typescript.typescriptDefaults.addExtraLib(content.default, 'cheerio')
-            }
-        })
-    const cryptoJsImportMeta = import.meta.glob('../../../../../node_modules/@types/crypto-js/index.d.ts', {  query: '?raw'})
-    cryptoJsImportMeta['../../../../../node_modules/@types/crypto-js/index.d.ts']()
-        .then((content: { default: string }) => {
-            console.log('cryptoJsImportMeta content', content);
-            if (content.default) {
-                monaco.languages.typescript.typescriptDefaults.addExtraLib(content.default, 'crypto-js')
-            }
-        })
+}
+
+async function injectDts(): Promise<void> {
+    injectAxiosDts();
+    injectCryptoDts();
+    injectCheerioDts();
 
 
+    console.log(monaco.languages.typescript.typescriptDefaults.getExtraLibs())
+
+    monaco.languages.typescript.typescriptDefaults.addExtraLib(injectUtilDts, 'file:///util.d.ts')
     monaco.languages.typescript.typescriptDefaults.addExtraLib(testDts, 'file:///test.d.ts')
     console.log('dts 注册成功')
 }
 
 
-export function useEditor() {
+export async function useEditor() {
     const playgroundRef = useTemplateRef<HTMLDivElement>('playgroundRef');
     let editor: monaco.editor.IStandaloneCodeEditor | null = null;
 
@@ -82,24 +85,27 @@ export function useEditor() {
             moduleResolution: monaco.languages.typescript.ModuleResolutionKind.NodeJs,
         });
 
+        await injectDts();
+
+        const model = monaco.editor.createModel(
+            "",
+            "typescript"
+        );
+
+
         // Create the editor first
         editor = monaco.editor.create(playgroundRef.value, {
-            language: 'typescript',
+            model,
             automaticLayout: true,
             minimap: { enabled: false },
             fontSize: 16,
         })
 
         // Now inject the d.ts files after the editor is created
-        injectDts();
 
 
-        // Refresh the model to recognize the new types
-        const model = editor.getModel();
-        if (model) {
-            // Re-set the language to trigger type re-evaluation
-            monaco.editor.setModelLanguage(model, 'typescript');
-        }
+
+
     }
 
 
